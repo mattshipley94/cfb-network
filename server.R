@@ -70,7 +70,7 @@ function(input, output) {
     
     visNetwork(nodes, edges,
                height="1000px",
-               width="100%") %>%
+               width="1000px") %>%
       visOptions(highlightNearest = TRUE)
   })
 }

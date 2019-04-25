@@ -14,7 +14,7 @@ library(ndtv)
 library(shiny)
 
 # Running UI
-fluidPage(
+fillPage(
   titlePanel("CFB Network Explorer"),
   visNetworkOutput("network")
 )
