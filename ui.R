@@ -10,7 +10,7 @@ library(sna)
 library(visNetwork)
 library(threejs)
 library(networkD3)
-library(ndtv)
+# library(ndtv)
 library(shiny)
 
 # Running UI
