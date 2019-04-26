@@ -12,6 +12,7 @@ library(threejs)
 library(networkD3)
 # library(ndtv)
 library(shiny)
+library(shinydashboard)
 
 # Read team_grid file
 team_grid = fread("cfb_network_team_grid.csv")
@@ -69,8 +70,8 @@ function(input, output) {
     edges <- edges
     
     visNetwork(nodes, edges,
-               height="1000px",
-               width="1000px") %>%
+               width="1500",
+               height="1000") %>%
       visOptions(highlightNearest = TRUE)
   })
 }
