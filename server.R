@@ -74,4 +74,53 @@ function(input, output) {
                height="1000") %>%
       visOptions(highlightNearest = TRUE)
   })
+  
+  df <- reactive({
+    # input$file1 will be NULL initially. After the user selects
+    # and uploads a file, head of that data file by default,
+    # or all rows if selected, will be shown.
+    
+    req(input$file1)
+    
+    # when reading semicolon separated files,
+    # having a comma separator causes `read.csv` to error
+    tryCatch(
+      {
+        df <- read.csv(input$file1$datapath,
+                       header = input$header,
+                       sep = input$sep,
+                       quote = input$quote)
+      },
+      error = function(e) {
+        # return a safeError if a parsing error occurs
+        stop(safeError(e))
+      }
+    )
+  })
+  
+  newdata <- reactive({
+    df <- df()
+    df$Value_Squared = df[, 1] ^ 2
+    newdata <- df
+  })
+  
+  output$contents <- renderTable({
+    newdata()
+  })
+  
+  
+  # Downloadable csv of selected dataset ----
+  output$downloadData <- downloadHandler(
+    
+    filename = function() {
+      paste("download", ".csv", sep = "")
+    },
+    
+    content = function(file) {
+      write.csv(newdata(), file, row.names = FALSE)
+    }
+    
+  )
+  
+  
 }
